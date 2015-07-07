@@ -1,0 +1,9 @@
+package G4HiveActions
+
+use AtlasPolicy         AtlasPolicy-*
+#use AthenaBaseComps     AthenaBaseComps-*       Control
+#use GaudiInterface      GaudiInterface-*        External
+#use Geant4              Geant4-*                External
+
+library G4HiveActions *.cxx components/*.cxx
+apply_pattern component_library
