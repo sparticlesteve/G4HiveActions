@@ -1,8 +1,18 @@
 #ifndef G4HIVEACTIONS_USERACTIONSVC_H
 #define G4HIVEACTIONS_USERACTIONSVC_H
 
+// System includes
+#include <thread>
+
+// Framework includes
+#include "AthenaBaseComps/AthService.h"
+
 // Local includes
+#include "AtlasSteppingAction.h"
 #include "G4HiveActions/IUserActionSvc.h"
+
+// Other includes
+#include "tbb/concurrent_unordered_map.h"
 
 namespace g4hive
 {
@@ -29,6 +39,15 @@ namespace g4hive
 
       /// Initialize the user actions for the current thread
       StatusCode initializeActions() override final;
+
+    private:
+
+      // TODO: consider making a custom thread-local structure from this
+      #define CONC_MAP(TYPE) \
+        tbb::concurrent_unordered_map \
+        < std::thread::id, TYPE*, std::hash<std::thread::id> >
+
+      CONC_MAP(AtlasSteppingAction) m_steppingActions;
 
   }; // class UserActionSvc
 

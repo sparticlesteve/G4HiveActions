@@ -17,15 +17,15 @@ namespace g4hive
 
     public:
 
+      /// @brief Initialize all the user actions for the current thread.
+      virtual StatusCode initializeActions() = 0;
+
       /// Interface declaration
       static const InterfaceID& interfaceID()
       {
-        static const InterfaceID iid_IUASvc("IUserActionSvc", 1, 0);
-        return iid_ISenDetSvc;
+        static const InterfaceID iid_IUASvc("g4hive::IUserActionSvc", 1, 0);
+        return iid_IUASvc;
       }
-
-      /// @brief Initialize all the user actions for the current thread.
-      virtual StatusCode initializeActions() = 0;
 
   }; // class IUserActionSvc
 
