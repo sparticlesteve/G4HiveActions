@@ -1,0 +1,6 @@
+cmt/Makefile
+cmt/cleanup.csh
+cmt/cleanup.sh
+cmt/setup.csh
+cmt/setup.sh
+x86_64-slc6-*
