@@ -4,3 +4,5 @@ cmt/cleanup.sh
 cmt/setup.csh
 cmt/setup.sh
 x86_64-slc6-*
+cmt/install.*
+genConf/
