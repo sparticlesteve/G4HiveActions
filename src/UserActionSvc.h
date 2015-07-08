@@ -6,13 +6,14 @@
 
 // Framework includes
 #include "AthenaBaseComps/AthService.h"
+#include "GaudiKernel/ToolHandle.h"
 
 // Local includes
 #include "AtlasSteppingAction.h"
+#include "G4HiveActions/ISteppingActionTool.h"
 #include "G4HiveActions/IUserActionSvc.h"
+#include "G4HiveActions/ThreadActionHolder.h"
 
-// Other includes
-#include "tbb/concurrent_unordered_map.h"
 
 namespace g4hive
 {
@@ -42,12 +43,21 @@ namespace g4hive
 
     private:
 
-      // TODO: consider making a custom thread-local structure from this
-      #define CONC_MAP(TYPE) \
-        tbb::concurrent_unordered_map \
-        < std::thread::id, TYPE*, std::hash<std::thread::id> >
+      /// @name Handles to ATLAS action tools
+      /// @{
 
-      CONC_MAP(AtlasSteppingAction) m_steppingActions;
+      /// Stepping action tools
+      ToolHandleArray<ISteppingActionTool> m_steppingActionTools;
+
+      /// @}
+
+      /// @name ATLAS plugin actions
+      /// @{
+
+      /// Thread-local stepping action
+      ThreadActionHolder<AtlasSteppingAction> m_steppingActions;
+
+      /// @}
 
   }; // class UserActionSvc
 

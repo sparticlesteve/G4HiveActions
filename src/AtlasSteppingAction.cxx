@@ -23,4 +23,12 @@ namespace g4hive
     }
   }
 
+  //---------------------------------------------------------------------------
+  // Add one action to the action list
+  //---------------------------------------------------------------------------
+  void AtlasSteppingAction::addAction(ISteppingAction* action)
+  {
+    m_actions.push_back(action);
+  }
+
 } // namespace g4hive

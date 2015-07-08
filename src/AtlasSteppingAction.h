@@ -38,6 +38,9 @@ namespace g4hive
       /// in its private list.
       void UserSteppingAction(const G4Step* step) override final;
 
+      /// @brief Add one action to the list
+      void addAction(ISteppingAction* action);
+
     private:
 
       std::vector<ISteppingAction*> m_actions;

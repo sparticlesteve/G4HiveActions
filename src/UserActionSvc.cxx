@@ -11,6 +11,7 @@ namespace g4hive
                                ISvcLocator* pSvcLocator)
     : AthService(name, pSvcLocator)
   {
+    declareProperty("SteppingActionTools", m_steppingActionTools);
   }
 
   //---------------------------------------------------------------------------
@@ -18,14 +19,33 @@ namespace g4hive
   //---------------------------------------------------------------------------
   StatusCode UserActionSvc::initialize()
   {
+    ATH_CHECK( m_steppingActionTools.retrieve() );
     return StatusCode::SUCCESS;
   }
 
   //---------------------------------------------------------------------------
   // Initialize the user actions for the current thread
+  // TODO: this prototype needs to be significantly cleaner.
   //---------------------------------------------------------------------------
   StatusCode UserActionSvc::initializeActions()
   {
+    // Make sure we don't already have an action assigned for this thread.
+    AtlasSteppingAction* stepAction = m_steppingActions.get();
+    if(stepAction) {
+      ATH_MSG_ERROR("Stepping action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    stepAction = new AtlasSteppingAction;
+    m_steppingActions.set(stepAction);
+
+    // Loop over stepping action tools
+    for(auto stepTool : m_steppingActionTools){
+      // Ask this stepping tool to give us a stepping action plugin.
+      ISteppingAction* stepPlugin = stepTool->getAction();
+      // Assign this action to the G4 object
+      stepAction->addAction(stepPlugin);
+    }
+
     return StatusCode::SUCCESS;
   }
 
