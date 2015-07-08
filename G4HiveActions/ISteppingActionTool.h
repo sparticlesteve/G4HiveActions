@@ -23,14 +23,21 @@ namespace g4hive
     
     public:
 
-      /// Create an action for this thread
-      virtual std::unique_ptr<ISteppingAction> makeSteppingAction() = 0;
+      /// @brief Return the action for current thread.
+      /// I'm not 100% sure about this, as it starts to differ
+      /// from how I did the SDs. Let's see how it looks.
+      virtual ISteppingAction* getAction() = 0;
 
       /// Interface declaration
       static const InterfaceID& interfaceID() {
         static const InterfaceID iid_IStepTool("g4hive::ISteppingActionTool", 1, 0);
         return iid_IStepTool;
       }
+
+    protected:
+
+      /// Create an action for this thread. Must be implemented by tool.
+      virtual ISteppingAction* makeSteppingAction() = 0;
 
   }; // class ISteppingActionTool
 
