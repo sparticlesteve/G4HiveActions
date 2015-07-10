@@ -5,6 +5,7 @@
 #include "AthenaBaseComps/AthAlgTool.h"
 
 // Local includes
+#include "G4HiveActions/SteppingActionBaseTool.h"
 #include "G4HiveActions/ISteppingActionTool.h"
 
 namespace g4hive
@@ -14,7 +15,7 @@ namespace g4hive
   /// @brief Tool which manages the ExampleSteppingAction
   ///
   class ExampleSteppingActionTool : public SteppingActionBaseTool,
-                                    public ISteppingActionTool
+                                    public virtual ISteppingActionTool
   {
 
     public:

@@ -16,7 +16,7 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Process one step
   //---------------------------------------------------------------------------
-  ExampleSteppingAction::processStep(const G4Step* step)
+  void ExampleSteppingAction::processStep(const G4Step* step)
   {
     // Do something here...
     step->GetTrack();
