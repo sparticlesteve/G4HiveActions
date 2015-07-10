@@ -9,7 +9,8 @@
 #include "GaudiKernel/ToolHandle.h"
 
 // Local includes
-#include "AtlasSteppingAction.h"
+#include "G4AtlasSteppingAction.h"
+//#include "G4AtlasTrackingAction.h"
 #include "G4HiveActions/ISteppingActionTool.h"
 #include "G4HiveActions/IUserActionSvc.h"
 #include "G4HiveActions/ThreadActionHolder.h"
@@ -55,7 +56,9 @@ namespace g4hive
       /// @{
 
       /// Thread-local stepping action
-      ThreadActionHolder<AtlasSteppingAction> m_steppingActions;
+      ThreadActionHolder<G4AtlasSteppingAction> m_steppingActions;
+      /// Thread-local tracking action
+      //ThreadActionHolder<G4AtlasTrackingAction> m_trackingActions;
 
       /// @}
 

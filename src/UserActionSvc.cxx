@@ -30,12 +30,12 @@ namespace g4hive
   StatusCode UserActionSvc::initializeActions()
   {
     // Make sure we don't already have an action assigned for this thread.
-    AtlasSteppingAction* stepAction = m_steppingActions.get();
+    G4AtlasSteppingAction* stepAction = m_steppingActions.get();
     if(stepAction) {
       ATH_MSG_ERROR("Stepping action already exists for current thread!");
       return StatusCode::FAILURE;
     }
-    stepAction = new AtlasSteppingAction;
+    stepAction = new G4AtlasSteppingAction;
     m_steppingActions.set(stepAction);
 
     // Loop over stepping action tools
