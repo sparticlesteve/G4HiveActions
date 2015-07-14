@@ -1,6 +1,5 @@
 // Local includes
 #include "ExampleSteppingActionTool.h"
-#include "ExampleSteppingAction.h"
 
 namespace g4hive
 {
@@ -11,14 +10,14 @@ namespace g4hive
   ExampleSteppingActionTool::
   ExampleSteppingActionTool(const std::string& type, const std::string& name,
                             const IInterface* parent)
-    : SteppingActionBaseTool(type, name, parent)
+    : AthAlgTool(type, name, parent)
   {
   }
 
   //---------------------------------------------------------------------------
   // Create the action on request
   //---------------------------------------------------------------------------
-  ISteppingAction* ExampleSteppingActionTool::makeSteppingAction()
+  ExampleSteppingAction* ExampleSteppingActionTool::makeAction()
   {
     return new ExampleSteppingAction();
   }

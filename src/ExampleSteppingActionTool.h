@@ -8,17 +8,22 @@
 #include "AthenaBaseComps/AthAlgTool.h"
 
 // Local includes
-#include "G4HiveActions/SteppingActionBaseTool.h"
+//#include "G4HiveActions/SteppingActionBaseTool.h"
 #include "G4HiveActions/ISteppingActionTool.h"
+#include "G4HiveActions/ActionToolBase.h"
+#include "ExampleSteppingAction.h"
 
 namespace g4hive
 {
 
+  typedef ActionToolBase<ExampleSteppingAction> ExampleStepToolBase;
+
   /// @class ExampleSteppingActionTool
   /// @brief Tool which manages the ExampleSteppingAction
   ///
-  class ExampleSteppingActionTool : public SteppingActionBaseTool,
-                                    public virtual ISteppingActionTool
+  class ExampleSteppingActionTool : public virtual ISteppingActionTool,
+                                    public AthAlgTool,
+                                    public ExampleStepToolBase
   {
 
     public:
@@ -27,10 +32,14 @@ namespace g4hive
       ExampleSteppingActionTool(const std::string& type, const std::string& name,
                                 const IInterface* parent);
 
+      /// Down-call to the template utility base
+      ISteppingAction* getAction()
+      { return ExampleStepToolBase::getAction<ISteppingAction>(); }
+
     protected:
 
       /// Create an action for this thread
-      ISteppingAction* makeSteppingAction() override final;
+      ExampleSteppingAction* makeAction() override final;
 
   }; // class ExampleSteppingActionTool
 
