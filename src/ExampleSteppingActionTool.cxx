@@ -8,8 +8,10 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Constructor
   //---------------------------------------------------------------------------
-  ExampleSteppingActionTool::ExampleSteppingActionTool(const std::string& name)
-    : SteppingActionBaseTool(name)
+  ExampleSteppingActionTool::
+  ExampleSteppingActionTool(const std::string& type, const std::string& name,
+                            const IInterface* parent)
+    : SteppingActionBaseTool(type, name, parent)
   {
   }
 

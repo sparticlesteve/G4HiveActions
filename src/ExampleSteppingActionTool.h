@@ -24,13 +24,13 @@ namespace g4hive
     public:
 
       /// Standard constructor
-      ExampleSteppingActionTool(const std::string& name);
+      ExampleSteppingActionTool(const std::string& type, const std::string& name,
+                                const IInterface* parent);
 
     protected:
 
       /// Create an action for this thread
       ISteppingAction* makeSteppingAction() override final;
-      
 
   }; // class ExampleSteppingActionTool
 
