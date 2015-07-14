@@ -30,11 +30,6 @@ namespace g4hive
         return iid_IPreTrkTool;
       }
 
-    protected:
-
-      /// Create an action for this thread. Must be implemented by tool.
-      virtual IPreTrackingAction* makePreTrackingAction() = 0;
-
   }; // class IPreTrackingActionTool
 
 } // namespace g4hive

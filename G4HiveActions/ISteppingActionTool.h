@@ -34,11 +34,6 @@ namespace g4hive
         return iid_IStepTool;
       }
 
-    protected:
-
-      /// Create an action for this thread. Must be implemented by tool.
-      virtual ISteppingAction* makeSteppingAction() = 0;
-
   }; // class ISteppingActionTool
 
 } // namespace g4hive

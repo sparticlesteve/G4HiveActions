@@ -30,11 +30,6 @@ namespace g4hive
         return iid_IPostTrkTool;
       }
 
-    protected:
-
-      /// Create an action for this thread. Must be implemented by tool.
-      virtual IPostTrackingAction* makePostTrackingAction() = 0;
-
   }; // class IPostTrackingActionTool
 
 } // namespace g4hive

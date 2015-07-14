@@ -30,11 +30,6 @@ namespace g4hive
         return iid_IEndEventTool;
       }
 
-    protected:
-
-      /// Create an action for this thread. Must be implemented by tool.
-      virtual IEndEventAction* makeEndEventAction() = 0;
-
   }; // class IEndEventActionTool
 
 } // namespace g4hive
