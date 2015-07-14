@@ -24,7 +24,7 @@ namespace g4hive
 
       /// Constructor
       SteppingActionBaseTool(const std::string& type, const std::string& name,
-                             const IInterface *parent);
+                             const IInterface* parent);
 
       /// @brief Return the action for the current thread.
       /// This method will trigger creation of the action when first

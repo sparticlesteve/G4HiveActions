@@ -1,6 +1,9 @@
 #ifndef G4HIVEACTIONS_EXAMPLESTEPPINGACTIONTOOL_H
 #define G4HIVEACTIONS_EXAMPLESTEPPINGACTIONTOOL_H
 
+// STL includes
+#include <string>
+
 // Framework includes
 #include "AthenaBaseComps/AthAlgTool.h"
 
