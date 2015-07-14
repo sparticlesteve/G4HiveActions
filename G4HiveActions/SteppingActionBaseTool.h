@@ -36,6 +36,11 @@ namespace g4hive
       /// Create an action for this thread on demand.
       virtual ISteppingAction* makeSteppingAction() = 0;
 
+    protected:
+
+      /// Make action on demand
+      virtual ISteppingAction* makeSteppingAction() = 0;
+
     private:
 
       /// Thread-local storage of my actions
