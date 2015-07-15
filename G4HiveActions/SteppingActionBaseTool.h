@@ -29,7 +29,7 @@ namespace g4hive
       /// @brief Return the action for the current thread.
       /// This method will trigger creation of the action when first
       /// called in a new thread.
-      ISteppingAction* getAction() override final;
+      ISteppingAction* getSteppingAction() override final;
 
     protected:
 

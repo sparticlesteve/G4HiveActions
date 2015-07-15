@@ -17,7 +17,7 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Return the action for the current thread
   //---------------------------------------------------------------------------
-  ISteppingAction* SteppingActionBaseTool::getAction()
+  ISteppingAction* SteppingActionBaseTool::getSteppingAction()
   {
     ISteppingAction* action = m_action.get();
     if(!action){

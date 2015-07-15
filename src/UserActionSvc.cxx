@@ -41,7 +41,7 @@ namespace g4hive
     // Loop over stepping action tools
     for(auto stepTool : m_steppingActionTools){
       // Ask this stepping tool to give us a stepping action plugin.
-      ISteppingAction* stepPlugin = stepTool->getAction();
+      ISteppingAction* stepPlugin = stepTool->getSteppingAction();
       // Assign this action to the G4 object
       stepAction->addAction(stepPlugin);
     }

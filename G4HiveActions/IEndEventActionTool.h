@@ -22,7 +22,7 @@ namespace g4hive
     public:
 
       /// Return the action for current thread.
-      virtual IEndEventAction* getAction() = 0
+      virtual IEndEventAction* getEndEventAction() = 0;
 
       /// Interface declaration
       static const InterfaceID& interfaceID() {

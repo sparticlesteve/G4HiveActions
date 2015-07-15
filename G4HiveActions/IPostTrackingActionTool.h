@@ -22,7 +22,7 @@ namespace g4hive
     public:
 
       /// Return the action for current thread.
-      virtual IPostTrackingAction* getAction() = 0;
+      virtual IPostTrackingAction* getPostTrackingAction() = 0;
 
       /// Interface declaration
       static const InterfaceID& interfaceID() {
