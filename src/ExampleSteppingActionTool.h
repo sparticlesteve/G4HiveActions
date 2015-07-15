@@ -32,7 +32,7 @@ namespace g4hive
                                 const IInterface* parent);
 
       /// Down-call to the template utility base
-      ISteppingAction* getAction()
+      ISteppingAction* getSteppingAction() override final
       { return ExampleStepToolBase::getAction<ISteppingAction>(); }
 
     protected:
