@@ -1,9 +1,6 @@
 #ifndef G4HIVEACTIONS_ISTEPPINGACTIONTOOL_H
 #define G4HIVEACTIONS_ISTEPPINGACTIONTOOL_H
 
-// System includes
-#include <memory>
-
 // Framework includes
 #include "GaudiKernel/IAlgTool.h"
 
