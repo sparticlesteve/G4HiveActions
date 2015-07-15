@@ -6,9 +6,9 @@ Thread-local Geant4 actions own lists of custom ATLAS action "plugins" which
 get called in turn. Tools are used to create the action plugins on demand
 during the initialization of each thread. A top-level service manages things.
 
-In this branch, I have a helper base class for stepping action tools, but
-nothing for multi-action tools. So, the ExampleMultiActionTool, the
-boiler-plate code is present.
+In this branch, I have a template helper base class for all action tools.
+All that's needed in the concrete tool types is to forward the getter method
+calls down to the base, and to implement the makeAction method.
 
 # Class structure
 Just highlighting some of the important ones:
@@ -19,11 +19,10 @@ Just highlighting some of the important ones:
 * [ISteppingActionTool](G4HiveActions/ISteppingActionTool.h) - Interface for a
   tool which creates and manages an ISteppingAction. Corresponding interfaces
   also exist for the other action types. Not all are implemented here.
-* [SteppingActionBaseTool](G4HiveActions/SteppingActionBaseTool.h) - Helper
-  base class for stepping action tools which manages the thread-local storage
-  of its actions. Note that helper classes like this can be written for
-  single-type actions, but for multi-type actions this approach would quickly
-  get too complicated.
+* [ActionToolBase](G4HiveActions/ActionToolBase.h) - Helper base class for all
+  action tools which manages the thread-local storage of the action plugins,
+  implements the action plugin retrieval, and calls a virtual maker method
+  to create the action plugin on demand if not already created.
 * [ExampleSteppingAction](src/ExampleSteppingAction.h) - A stepping action
   plugin. Doesn't actually do anything.
 * [ExampleSteppingActionTool](src/ExampleSteppingActionTool.h) - A stepping
@@ -33,8 +32,8 @@ Just highlighting some of the important ones:
 * [ExampleMultiAction](src/ExampleMultiAction.h) - An example action plugin
   that implemments two types of actions: pre-tracking and end-of-event.
 * [ExampleMultiActionTool](src/ExampleMultiActionTool.h) - Tool which manages
-  the ExampleMultiAction. Note that no helper base class is used here, so the
-  boiler plate code for managing/retrieving the action is explicit.
+  the ExampleMultiAction. Note the use of the ActionToolBase for
+  simplification.
 * [G4AtlasSteppingAction](src/G4AtlasSteppingAction.h) - A Geant4 stepping
   action class which owns a list of ISteppingActions and calls them when
   invoked by Geant4. This class is thread-locally owned by the UserActionSvc.
