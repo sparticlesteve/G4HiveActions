@@ -15,32 +15,12 @@ namespace g4hive
   }
 
   //---------------------------------------------------------------------------
-  // Retrieve pre-tracking interface
+  // Create the action on demand
   //---------------------------------------------------------------------------
-  IPreTrackingAction* ExampleMultiActionTool::getPreTrackingAction()
+  ExampleMultiAction* ExampleMultiActionTool::makeAction()
   {
-    return static_cast<IPreTrackingAction*>( getMyAction() );
-  }
-
-  //---------------------------------------------------------------------------
-  // Retrieve end-of-event interface
-  //---------------------------------------------------------------------------
-  IEndEventAction* ExampleMultiActionTool::getEndEventAction()
-  {
-    return static_cast<IEndEventAction*>( getMyAction() );
-  }
-
-  //---------------------------------------------------------------------------
-  // Get the concrete action for current thread
-  //---------------------------------------------------------------------------
-  ExampleMultiAction* ExampleMultiActionTool::getMyAction()
-  {
-    ExampleMultiAction* action = m_actions.get();
-    if(!action){
-      action = new ExampleMultiAction();
-      m_actions.set(action);
-    }
-    return action;
+    // Configure it here also
+    return new ExampleMultiAction();
   }
 
 } // namespace g4hive

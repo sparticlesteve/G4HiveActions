@@ -11,10 +11,13 @@
 #include "ExampleMultiAction.h"
 #include "G4HiveActions/IPreTrackingActionTool.h"
 #include "G4HiveActions/IEndEventActionTool.h"
-#include "G4HiveActions/ThreadActionHolder.h"
+#include "G4HiveActions/ActionToolBase.h"
 
 namespace g4hive
 {
+
+  typedef ActionToolBase<ExampleMultiAction> ExampleMultiToolBase;
+
 
   /// @class ExampleMultiActionTool
   /// @brief Example tool which manages the ExampleMultiAction.
@@ -27,7 +30,8 @@ namespace g4hive
   ///
   class ExampleMultiActionTool : public IPreTrackingActionTool,
                                  public IEndEventActionTool,
-                                 public AthAlgTool
+                                 public AthAlgTool,
+                                 public ExampleMultiToolBase
   {
 
     public:
@@ -37,21 +41,19 @@ namespace g4hive
                              const IInterface* parent);
 
       /// @brief Retrieve the pre-tracking action for the current thread.
-      /// The action will be created if it doesn't already exist.
-      IPreTrackingAction* getPreTrackingAction() override final;
+      /// Down-call to the template utility base
+      IPreTrackingAction* getPreTrackingAction() override final
+      { return ExampleMultiToolBase::getAction<IPreTrackingAction>(); }
 
       /// @brief Retrieve the end-event action for the current thread.
-      /// The action will be created if it doesn't already exist.
-      IEndEventAction* getEndEventAction() override final;
+      /// Down-call to the template utility base
+      IEndEventAction* getEndEventAction() override final
+      { return ExampleMultiToolBase::getAction<IEndEventAction>(); }
 
     private:
 
-      /// @brief Get the concrete action for the current thread.
-      /// This method actually does the creation of the action.
-      ExampleMultiAction* getMyAction();
-
-      /// Thread-local storage of actions
-      ThreadActionHolder<ExampleMultiAction> m_actions;
+      /// Create an action on demand for this thread.
+      ExampleMultiAction* makeAction() override final;
 
   }; // class ExampleMultiActionTool
 
