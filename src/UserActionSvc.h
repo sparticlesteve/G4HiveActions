@@ -10,8 +10,13 @@
 
 // Local includes
 #include "G4AtlasSteppingAction.h"
-//#include "G4AtlasTrackingAction.h"
+#include "G4AtlasTrackingAction.h"
+#include "G4AtlasEventAction.h"
 #include "G4HiveActions/ISteppingActionTool.h"
+#include "G4HiveActions/IPreTrackingActionTool.h"
+#include "G4HiveActions/IPostTrackingActionTool.h"
+#include "G4HiveActions/IBeginEventActionTool.h"
+#include "G4HiveActions/IEndEventActionTool.h"
 #include "G4HiveActions/IUserActionSvc.h"
 #include "G4HiveActions/ThreadActionHolder.h"
 
@@ -49,6 +54,14 @@ namespace g4hive
 
       /// Stepping action tools
       ToolHandleArray<ISteppingActionTool> m_steppingActionTools;
+      /// Pre-tracking action tools
+      ToolHandleArray<IPreTrackingActionTool> m_preTrackingActionTools;
+      /// Post-tracking action tools
+      ToolHandleArray<IPostTrackingActionTool> m_postTrackingActionTools;
+      /// Begin-event action tools
+      ToolHandleArray<IBeginEventActionTool> m_beginEventActionTools;
+      /// End-event action tools
+      ToolHandleArray<IEndEventActionTool> m_endEventActionTools;
 
       /// @}
 
@@ -58,7 +71,9 @@ namespace g4hive
       /// Thread-local stepping action
       ThreadActionHolder<G4AtlasSteppingAction> m_steppingActions;
       /// Thread-local tracking action
-      //ThreadActionHolder<G4AtlasTrackingAction> m_trackingActions;
+      ThreadActionHolder<G4AtlasTrackingAction> m_trackingActions;
+      /// Thread-local event action
+      ThreadActionHolder<G4AtlasEventAction> m_eventActions;
 
       /// @}
 

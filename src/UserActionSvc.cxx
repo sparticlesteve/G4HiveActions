@@ -24,12 +24,14 @@ namespace g4hive
   }
 
   //---------------------------------------------------------------------------
-  // Initialize the user actions for the current thread
-  // TODO: this prototype needs to be significantly cleaner.
+  // Initialize the user actions for the current thread.
+  // In this code, "action" refers to the G4 action classes, and "plugin"
+  // refers to the custom action objects that get assigned to the G4 action.
+  // TODO: this prototype could be cleaner
   //---------------------------------------------------------------------------
   StatusCode UserActionSvc::initializeActions()
   {
-    // Make sure we don't already have an action assigned for this thread.
+    // Initialize the ATLAS stepping action.
     G4AtlasSteppingAction* stepAction = m_steppingActions.get();
     if(stepAction) {
       ATH_MSG_ERROR("Stepping action already exists for current thread!");
@@ -38,12 +40,52 @@ namespace g4hive
     stepAction = new G4AtlasSteppingAction;
     m_steppingActions.set(stepAction);
 
-    // Loop over stepping action tools
+    // Assign stepping plugins
     for(auto stepTool : m_steppingActionTools){
-      // Ask this stepping tool to give us a stepping action plugin.
       ISteppingAction* stepPlugin = stepTool->getSteppingAction();
-      // Assign this action to the G4 object
       stepAction->addAction(stepPlugin);
+    }
+
+    // Initialize the ATLAS tracking action.
+    G4AtlasTrackingAction* trackAction = m_trackingActions.get();
+    if(trackAction) {
+      ATH_MSG_ERROR("Tracking action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    trackAction = new G4AtlasTrackingAction;
+    m_trackingActions.set(trackAction);
+
+    // Assign pre-tracking plugins
+    for(auto preTrackTool : m_preTrackingActionTools){
+      IPreTrackingAction* preTrackPlugin = preTrackTool->getPreTrackingAction();
+      trackAction->addPreTrackAction(preTrackPlugin);
+    }
+
+    // Assign post-tracking plugins
+    for(auto postTrackTool : m_postTrackingActionTools){
+      IPostTrackingAction* postTrackPlugin = postTrackTool->getPostTrackingAction();
+      trackAction->addPostTrackAction(postTrackPlugin);
+    }
+
+    // Initialize the ATLAS event action.
+    G4AtlasEventAction* eventAction = m_eventActions.get();
+    if(eventAction) {
+      ATH_MSG_ERROR("Event action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    eventAction = new G4AtlasEventAction;
+    m_eventActions.set(eventAction);
+
+    // Assign begin-event plugins
+    for(auto beginEventTool : m_beginEventActionTools){
+      IBeginEventAction* beginEventPlugin = beginEventTool->getBeginEventAction();
+      eventAction->addBeginEventAction(beginEventPlugin);
+    }
+
+    // Assign end-event plugins
+    for(auto endEventTool : m_endEventActionTools){
+      IEndEventAction* endEventPlugin = endEventTool->getEndEventAction();
+      eventAction->addEndEventAction(endEventPlugin);
     }
 
     return StatusCode::SUCCESS;
