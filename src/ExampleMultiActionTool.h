@@ -41,14 +41,14 @@ namespace g4hive
                              const IInterface* parent);
 
       /// @brief Retrieve the pre-tracking action for the current thread.
-      /// Down-call to the template utility base
+      /// Calls the base helper method to trigger creation on demand.
       IPreTrackingAction* getPreTrackingAction() override final
-      { return ExampleMultiToolBase::getAction<IPreTrackingAction>(); }
+      { return static_cast<IPreTrackingAction*>( getAction() ); }
 
       /// @brief Retrieve the end-event action for the current thread.
-      /// Down-call to the template utility base
+      /// Calls the base helper method to trigger creation on demand.
       IEndEventAction* getEndEventAction() override final
-      { return ExampleMultiToolBase::getAction<IEndEventAction>(); }
+      { return static_cast<IEndEventAction*>( getAction() ); }
 
     private:
 

@@ -31,9 +31,9 @@ namespace g4hive
       ExampleSteppingActionTool(const std::string& type, const std::string& name,
                                 const IInterface* parent);
 
-      /// Down-call to the template utility base
+      /// Retrieve the stepping action
       ISteppingAction* getSteppingAction() override final
-      { return ExampleStepToolBase::getAction<ISteppingAction>(); }
+      { return static_cast<ISteppingAction*>( getAction() ); }
 
     protected:
 

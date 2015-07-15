@@ -26,19 +26,17 @@ namespace g4hive
 
     public:
 
-      /// @brief Template method for retrieving an action interface.
+      /// @brief Helper method for retrieving an action interface.
       /// The concrete action tool should down-call this method to do the
-      /// retrieval for a particular interface. Compile-time checking will
-      /// make sure everything is allowed.
-      template <class ActionInterfaceType>
-      ActionInterfaceType* getAction()
+      /// retrieval and then cast it to the desired interface.
+      ActionType* getAction()
       {
         ActionType* action = m_actions.get();
         if(!action){
           action = makeAction();
           m_actions.set(action);
         }
-        return static_cast<ActionInterfaceType*>(action);
+        return action;
       }
 
     protected:
