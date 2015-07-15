@@ -40,12 +40,12 @@ namespace g4hive
       /// Initialize the service
       StatusCode initialize() override;
 
+      /// Initialize the user actions for the current thread
+      StatusCode initializeActions() override final;
+
       /// Gaudi interface query
       virtual StatusCode queryInterface(const InterfaceID& riid,
                                         void** ppvInterface);
-
-      /// Initialize the user actions for the current thread
-      StatusCode initializeActions() override final;
 
     private:
 
