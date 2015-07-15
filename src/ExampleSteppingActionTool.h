@@ -8,7 +8,6 @@
 #include "AthenaBaseComps/AthAlgTool.h"
 
 // Local includes
-//#include "G4HiveActions/SteppingActionBaseTool.h"
 #include "G4HiveActions/ISteppingActionTool.h"
 #include "G4HiveActions/ActionToolBase.h"
 #include "ExampleSteppingAction.h"
