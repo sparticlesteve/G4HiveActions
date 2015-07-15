@@ -4,9 +4,6 @@
 // STL includes
 #include <string>
 
-// Framework includes
-#include "AthenaBaseComps/AthAlgTool.h"
-
 // Local includes
 #include "G4HiveActions/ISteppingActionTool.h"
 #include "G4HiveActions/ActionToolBase.h"
@@ -15,14 +12,11 @@
 namespace g4hive
 {
 
-  typedef ActionToolBase<ExampleSteppingAction> ExampleStepToolBase;
-
   /// @class ExampleSteppingActionTool
   /// @brief Tool which manages the ExampleSteppingAction
   ///
-  class ExampleSteppingActionTool : public virtual ISteppingActionTool,
-                                    public AthAlgTool,
-                                    public ExampleStepToolBase
+  class ExampleSteppingActionTool : public ISteppingActionTool,
+                                    public ActionToolBase<ExampleSteppingAction>
   {
 
     public:

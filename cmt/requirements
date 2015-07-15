@@ -2,9 +2,9 @@ package G4HiveActions
 
 use AtlasPolicy         AtlasPolicy-*
 use GaudiInterface      GaudiInterface-*        External
+use AthenaBaseComps     AthenaBaseComps-*       Control
 
 private
-use AthenaBaseComps     AthenaBaseComps-*       Control
 use Geant4              Geant4-*                External
 end_private
 

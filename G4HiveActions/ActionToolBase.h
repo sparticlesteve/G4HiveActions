@@ -1,6 +1,9 @@
 #ifndef G4HIVEACTIONS_ACTIONTOOLBASE_H
 #define G4HIVEACTIONS_ACTIONTOOLBASE_H
 
+// Framework includes
+#include "AthenaBaseComps/AthAlgTool.h"
+
 // Local includes
 #include "G4HiveActions/ThreadActionHolder.h"
 
@@ -21,10 +24,16 @@ namespace g4hive
   /// @author Steve Farrell <Steven.Farrell@cern.ch>
   ///
   template <class ActionType>
-  class ActionToolBase
+  class ActionToolBase : public AthAlgTool
   {
 
     public:
+
+      /// Standard constructor
+      ActionToolBase(const std::string& type, const std::string& name,
+                     const IInterface* parent)
+        : AthAlgTool(type, name, parent)
+      {}
 
       /// @brief Helper method for retrieving an action interface.
       /// The concrete action tool should down-call this method to do the

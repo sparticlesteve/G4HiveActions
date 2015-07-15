@@ -4,9 +4,6 @@
 // STL includes
 #include <string>
 
-// Framework includes
-#include "AthenaBaseComps/AthAlgTool.h"
-
 // Local includes
 #include "ExampleMultiAction.h"
 #include "G4HiveActions/IPreTrackingActionTool.h"
@@ -15,9 +12,6 @@
 
 namespace g4hive
 {
-
-  typedef ActionToolBase<ExampleMultiAction> ExampleMultiToolBase;
-
 
   /// @class ExampleMultiActionTool
   /// @brief Example tool which manages the ExampleMultiAction.
@@ -30,8 +24,7 @@ namespace g4hive
   ///
   class ExampleMultiActionTool : public IPreTrackingActionTool,
                                  public IEndEventActionTool,
-                                 public AthAlgTool,
-                                 public ExampleMultiToolBase
+                                 public ActionToolBase<ExampleMultiAction>
   {
 
     public:

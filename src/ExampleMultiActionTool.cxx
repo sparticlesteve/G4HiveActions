@@ -10,7 +10,7 @@ namespace g4hive
   ExampleMultiActionTool::
   ExampleMultiActionTool(const std::string& type, const std::string& name,
                          const IInterface* parent)
-    : AthAlgTool(type, name, parent)
+    : ActionToolBase<ExampleMultiAction>(type, name, parent)
   {
   }
 
