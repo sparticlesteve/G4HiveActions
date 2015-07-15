@@ -6,6 +6,10 @@ Thread-local Geant4 actions own lists of custom ATLAS action "plugins" which
 get called in turn. Tools are used to create the action plugins on demand
 during the initialization of each thread. A top-level service manages things.
 
+In this branch, I have a helper base class for stepping action tools, but
+nothing for multi-action tools. So, the ExampleMultiActionTool, the
+boiler-plate code is present.
+
 # Class structure
 Just highlighting some of the important ones:
 
