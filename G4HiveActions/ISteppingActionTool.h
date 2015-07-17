@@ -21,8 +21,6 @@ namespace g4hive
     public:
 
       /// @brief Return the action for current thread.
-      /// I'm not 100% sure about this, as it starts to differ
-      /// from how I did the SDs. Let's see how it looks.
       virtual ISteppingAction* getSteppingAction() = 0;
 
       /// Interface declaration
