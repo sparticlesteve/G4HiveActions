@@ -35,8 +35,11 @@ namespace g4hive
 
     private:
 
+      typedef std::thread::id ThreadMapKey_t;
+      typedef ActionType* ThreadMapVal_t;
+      typedef std::hash<ThreadMapKey_t> ThreadMapHash_t;
       typedef tbb::concurrent_unordered_map 
-      < std::thread::id, ActionType*, std::hash<std::thread::id> > ThreadMap_t;
+      < ThreadMapKey_t, ThreadMapVal_t, ThreadMapHash_t > ThreadMap_t;
       
       /// The wrapped thread-local storage container
       ThreadMap_t m_threadMap;
