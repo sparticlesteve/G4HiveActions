@@ -11,6 +11,8 @@ namespace g4hive
   class IBeginEventAction
   {
     public:
+      /// Virtual destructor
+      virtual ~IBeginEventAction(){};
       /// Method called before simulating a G4 event
       virtual void beginOfEvent(const G4Event*) = 0;
   };

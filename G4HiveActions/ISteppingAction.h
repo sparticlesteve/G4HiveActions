@@ -11,6 +11,8 @@ namespace g4hive
   class ISteppingAction
   {
     public:
+      /// Virtual destructor
+      virtual ~ISteppingAction(){};
       /// Method called at every step for processing
       virtual void processStep(const G4Step*) = 0;
   };

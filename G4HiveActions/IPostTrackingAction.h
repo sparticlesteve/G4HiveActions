@@ -11,6 +11,8 @@ namespace g4hive
   class IPostTrackingAction
   {
     public:
+      /// Virtual destructor
+      virtual ~IPostTrackingAction(){};
       /// Method called before tracking a particle
       virtual void postTracking(const G4Track*) = 0;
   };

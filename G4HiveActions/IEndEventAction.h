@@ -11,6 +11,8 @@ namespace g4hive
   class IEndEventAction
   {
     public:
+      /// Virtual destructor
+      virtual ~IEndEventAction(){};
       /// Method called after simulating a G4 event
       virtual void endOfEvent(const G4Event*) = 0;
   };

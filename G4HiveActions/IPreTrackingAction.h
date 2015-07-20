@@ -11,6 +11,8 @@ namespace g4hive
   class IPreTrackingAction
   {
     public:
+      /// Virtual destructor
+      virtual ~IPreTrackingAction(){};
       /// Method called before tracking a particle
       virtual void preTracking(const G4Track*) = 0;
   };
