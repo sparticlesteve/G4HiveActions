@@ -1,4 +1,4 @@
-// Local includes
+#include "CxxUtils/make_unique.h"
 #include "UserActionSvc.h"
 
 namespace g4hive
@@ -32,61 +32,56 @@ namespace g4hive
   StatusCode UserActionSvc::initializeActions()
   {
     // Initialize the ATLAS stepping action.
-    G4AtlasSteppingAction* stepAction = m_steppingActions.get();
-    if(stepAction) {
+    if(m_steppingActions.get()) {
       ATH_MSG_ERROR("Stepping action already exists for current thread!");
       return StatusCode::FAILURE;
     }
-    stepAction = new G4AtlasSteppingAction;
-    m_steppingActions.set(stepAction);
+    auto stepAction = CxxUtils::make_unique<G4AtlasSteppingAction>();
 
     // Assign stepping plugins
     for(auto stepTool : m_steppingActionTools){
       ISteppingAction* stepPlugin = stepTool->getSteppingAction();
       stepAction->addAction(stepPlugin);
     }
+    m_steppingActions.set( std::move(stepAction) );
 
     // Initialize the ATLAS tracking action.
-    G4AtlasTrackingAction* trackAction = m_trackingActions.get();
-    if(trackAction) {
+    if(m_trackingActions.get()) {
       ATH_MSG_ERROR("Tracking action already exists for current thread!");
       return StatusCode::FAILURE;
     }
-    trackAction = new G4AtlasTrackingAction;
-    m_trackingActions.set(trackAction);
+    auto trackAction = CxxUtils::make_unique<G4AtlasTrackingAction>();
 
     // Assign pre-tracking plugins
     for(auto preTrackTool : m_preTrackingActionTools){
       IPreTrackingAction* preTrackPlugin = preTrackTool->getPreTrackingAction();
       trackAction->addPreTrackAction(preTrackPlugin);
     }
-
     // Assign post-tracking plugins
     for(auto postTrackTool : m_postTrackingActionTools){
       IPostTrackingAction* postTrackPlugin = postTrackTool->getPostTrackingAction();
       trackAction->addPostTrackAction(postTrackPlugin);
     }
+    m_trackingActions.set( std::move(trackAction) );
 
     // Initialize the ATLAS event action.
-    G4AtlasEventAction* eventAction = m_eventActions.get();
-    if(eventAction) {
+    if(m_eventActions.get()) {
       ATH_MSG_ERROR("Event action already exists for current thread!");
       return StatusCode::FAILURE;
     }
-    eventAction = new G4AtlasEventAction;
-    m_eventActions.set(eventAction);
+    auto eventAction = CxxUtils::make_unique<G4AtlasEventAction>();
 
     // Assign begin-event plugins
     for(auto beginEventTool : m_beginEventActionTools){
       IBeginEventAction* beginEventPlugin = beginEventTool->getBeginEventAction();
       eventAction->addBeginEventAction(beginEventPlugin);
     }
-
     // Assign end-event plugins
     for(auto endEventTool : m_endEventActionTools){
       IEndEventAction* endEventPlugin = endEventTool->getEndEventAction();
       eventAction->addEndEventAction(endEventPlugin);
     }
+    m_eventActions.set( std::move(eventAction) );
 
     return StatusCode::SUCCESS;
   }

@@ -1,6 +1,9 @@
 #ifndef G4HIVEACTIONS_ACTIONTOOLBASE_H
 #define G4HIVEACTIONS_ACTIONTOOLBASE_H
 
+// System includes
+#include <memory>
+
 // Framework includes
 #include "AthenaBaseComps/AthAlgTool.h"
 
@@ -42,8 +45,9 @@ namespace g4hive
       {
         ActionType* action = m_actions.get();
         if(!action){
-          action = makeAction();
-          m_actions.set(action);
+          auto uniqueAction = makeAction();
+          m_actions.set(std::move(uniqueAction));
+          action = uniqueAction.get();
         }
         return action;
       }
@@ -52,7 +56,7 @@ namespace g4hive
 
       /// @brief Abstract method to create a custom action on demand.
       /// This method must be implemented by the concrete action tool.
-      virtual ActionType* makeAction() = 0;
+      virtual std::unique_ptr<ActionType> makeAction() = 0;
 
     private:
 

@@ -46,7 +46,7 @@ namespace g4hive
     private:
 
       /// Create an action on demand for this thread.
-      ExampleMultiAction* makeAction() override final;
+      std::unique_ptr<ExampleMultiAction> makeAction() override final;
 
   }; // class ExampleMultiActionTool
 

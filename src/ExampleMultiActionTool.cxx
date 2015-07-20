@@ -1,4 +1,4 @@
-// Local includes
+#include "CxxUtils/make_unique.h"
 #include "ExampleMultiActionTool.h"
 
 namespace g4hive
@@ -17,10 +17,11 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Create the action on demand
   //---------------------------------------------------------------------------
-  ExampleMultiAction* ExampleMultiActionTool::makeAction()
+  std::unique_ptr<ExampleMultiAction> ExampleMultiActionTool::makeAction()
   {
     // Configure it here also
-    return new ExampleMultiAction();
+    auto action = CxxUtils::make_unique<ExampleMultiAction>();
+    return std::move(action);
   }
 
 } // namespace g4hive

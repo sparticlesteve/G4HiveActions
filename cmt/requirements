@@ -5,6 +5,7 @@ use GaudiInterface      GaudiInterface-*        External
 use AthenaBaseComps     AthenaBaseComps-*       Control
 
 private
+use CxxUtils            CxxUtils-*              Control
 use Geant4              Geant4-*                External
 end_private
 
