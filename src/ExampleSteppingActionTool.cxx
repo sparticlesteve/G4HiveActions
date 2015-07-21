@@ -1,4 +1,4 @@
-// Local includes
+#include "CxxUtils/make_unique.h"
 #include "ExampleSteppingActionTool.h"
 
 namespace g4hive
@@ -17,9 +17,12 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Create the action on request
   //---------------------------------------------------------------------------
-  ExampleSteppingAction* ExampleSteppingActionTool::makeAction()
+  std::unique_ptr<ExampleSteppingAction>
+  ExampleSteppingActionTool::makeAction()
   {
-    return new ExampleSteppingAction();
+    // Configure it here also
+    auto action = CxxUtils::make_unique<ExampleSteppingAction>();
+    return std::move(action);
   }
 
 }

@@ -32,7 +32,7 @@ namespace g4hive
     protected:
 
       /// Create an action for this thread
-      ExampleSteppingAction* makeAction() override final;
+      std::unique_ptr<ExampleSteppingAction> makeAction() override final;
 
   }; // class ExampleSteppingActionTool
 
