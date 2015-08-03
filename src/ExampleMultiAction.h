@@ -17,8 +17,19 @@ namespace g4hive
 
     public:
 
+      /// @class Config
+      /// @brief Configuration parameters for ExampleMultiAction
+      ///
+      struct Config
+      {
+        /// An energy threshold
+        double minE;
+        /// A boolean flag
+        bool checkTrack;
+      };
+
       /// Constructor
-      ExampleMultiAction();
+      ExampleMultiAction(const Config& conf);
 
       /// Method called before tracking a particle
       void preTracking(const G4Track* track) override final;
@@ -26,7 +37,11 @@ namespace g4hive
       /// Method called after simulating a G4 event
       void endOfEvent(const G4Event* event) override final;
 
-    }; // class ExampleMultiAction
+    private:
+
+      Config m_conf;
+
+  }; // class ExampleMultiAction
 
 } // namespace g4hive
 

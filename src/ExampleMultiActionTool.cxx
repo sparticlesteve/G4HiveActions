@@ -12,6 +12,8 @@ namespace g4hive
                          const IInterface* parent)
     : ActionToolBase<ExampleMultiAction>(type, name, parent)
   {
+    declareProperty("MinE", m_conf.minE, "Track energy threshold");
+    declareProperty("CheckTrack", m_conf.checkTrack, "Flag to check track");
   }
 
   //---------------------------------------------------------------------------
@@ -20,7 +22,7 @@ namespace g4hive
   std::unique_ptr<ExampleMultiAction> ExampleMultiActionTool::makeAction()
   {
     // Configure it here also
-    auto action = CxxUtils::make_unique<ExampleMultiAction>();
+    auto action = CxxUtils::make_unique<ExampleMultiAction>(m_conf);
     return std::move(action);
   }
 

@@ -48,6 +48,9 @@ namespace g4hive
       /// Create an action on demand for this thread.
       std::unique_ptr<ExampleMultiAction> makeAction() override final;
 
+      /// Configuration options
+      ExampleMultiAction::Config m_conf;
+
   }; // class ExampleMultiActionTool
 
 } // namespace g4hive

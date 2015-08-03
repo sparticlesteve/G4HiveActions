@@ -11,7 +11,8 @@ namespace g4hive
   //---------------------------------------------------------------------------
   // Constructor
   //---------------------------------------------------------------------------
-  ExampleMultiAction::ExampleMultiAction()
+  ExampleMultiAction::ExampleMultiAction(const Config& conf)
+    : m_conf(conf)
   {}
 
   //---------------------------------------------------------------------------
@@ -19,8 +20,11 @@ namespace g4hive
   //---------------------------------------------------------------------------
   void ExampleMultiAction::preTracking(const G4Track* track)
   {
-    // Do something with the track...
-    track->GetPosition();
+    auto energy = track->GetTotalEnergy();
+    if( m_conf.checkTrack &&
+        energy > m_conf.minE ) {
+      track->GetPosition();
+    }
   }
 
   //---------------------------------------------------------------------------
