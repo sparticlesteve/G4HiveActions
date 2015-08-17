@@ -9,9 +9,11 @@
 #include "GaudiKernel/ToolHandle.h"
 
 // Local includes
+#include "G4AtlasStackingAction.h"
 #include "G4AtlasSteppingAction.h"
 #include "G4AtlasTrackingAction.h"
 #include "G4AtlasEventAction.h"
+#include "G4HiveActions/IStackingActionTool.h"
 #include "G4HiveActions/ISteppingActionTool.h"
 #include "G4HiveActions/IPreTrackingActionTool.h"
 #include "G4HiveActions/IPostTrackingActionTool.h"
@@ -52,6 +54,8 @@ namespace g4hive
       /// @name Handles to ATLAS action tools
       /// @{
 
+      /// Stacking action tools
+      ToolHandleArray<IStackingActionTool> m_stackingActionTools;
       /// Stepping action tools
       ToolHandleArray<ISteppingActionTool> m_steppingActionTools;
       /// Pre-tracking action tools
@@ -68,6 +72,8 @@ namespace g4hive
       /// @name ATLAS plugin actions
       /// @{
 
+      /// Thread-local stacking action
+      ThreadActionHolder<G4AtlasStackingAction> m_stackingActions;
       /// Thread-local stepping action
       ThreadActionHolder<G4AtlasSteppingAction> m_steppingActions;
       /// Thread-local tracking action

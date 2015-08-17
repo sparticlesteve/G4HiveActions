@@ -11,7 +11,12 @@ namespace g4hive
                                ISvcLocator* pSvcLocator)
     : AthService(name, pSvcLocator)
   {
+    declareProperty("StackingActionTools", m_stackingActionTools);
     declareProperty("SteppingActionTools", m_steppingActionTools);
+    declareProperty("PreTrackingActionTools", m_preTrackingActionTools);
+    declareProperty("PostTrackingActionTools", m_postTrackingActionTools);
+    declareProperty("BeginEventActionTools", m_beginEventActionTools);
+    declareProperty("EndEventActionTools", m_endEventActionTools);
   }
 
   //---------------------------------------------------------------------------
@@ -19,7 +24,13 @@ namespace g4hive
   //---------------------------------------------------------------------------
   StatusCode UserActionSvc::initialize()
   {
+    ATH_MSG_INFO("initialize");
+    ATH_CHECK( m_stackingActionTools.retrieve() );
     ATH_CHECK( m_steppingActionTools.retrieve() );
+    ATH_CHECK( m_preTrackingActionTools.retrieve() );
+    ATH_CHECK( m_postTrackingActionTools.retrieve() );
+    ATH_CHECK( m_beginEventActionTools.retrieve() );
+    ATH_CHECK( m_endEventActionTools.retrieve() );
     return StatusCode::SUCCESS;
   }
 
@@ -31,6 +42,22 @@ namespace g4hive
   //---------------------------------------------------------------------------
   StatusCode UserActionSvc::initializeActions()
   {
+    // Should I lock this?
+
+    // Initialize the ATLAS stacking action.
+    if(m_stackingActions.get()) {
+      ATH_MSG_ERROR("Stacking action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    auto stackAction = CxxUtils::make_unique<G4AtlasStackingAction>();
+
+    // Assign stacking plugins
+    for(auto stackTool : m_stackingActionTools){
+      IStackingAction* stackPlugin = stackTool->getStackingAction();
+      stackAction->addAction(stackPlugin);
+    }
+    m_stackingActions.set( std::move(stackAction) );
+
     // Initialize the ATLAS stepping action.
     if(m_steppingActions.get()) {
       ATH_MSG_ERROR("Stepping action already exists for current thread!");
