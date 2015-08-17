@@ -1,6 +1,9 @@
 #ifndef G4HIVEACTIONS_ISTACKINGACTION_H
 #define G4HIVEACTIONS_ISTACKINGACTION_H
 
+// Geant4 includes
+#include "G4ClassificationOfNewTrack.hh"
+
 // Forward declarations
 class G4Track;
 
