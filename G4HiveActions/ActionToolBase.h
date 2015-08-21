@@ -46,8 +46,8 @@ namespace g4hive
         ActionType* action = m_actions.get();
         if(!action){
           auto uniqueAction = makeAction();
-          m_actions.set(std::move(uniqueAction));
           action = uniqueAction.get();
+          m_actions.set( std::move(uniqueAction) );
         }
         return action;
       }
