@@ -46,6 +46,13 @@ namespace g4hive
 
     private:
 
+      /// @brief Identify track as a neutrino.
+      /// It might be useful to move this kind of functionality
+      /// into some standalong helper function(s).
+      bool isNeutrino(const G4Track*) const;
+      /// @brief Identify track as a photon.
+      bool isGamma(const G4Track*) const;
+
       /// My configuration options
       Config m_config;
 

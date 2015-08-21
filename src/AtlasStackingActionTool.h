@@ -16,8 +16,9 @@ namespace g4hive
   /// @class AtlasStackingActionTool
   /// @brief Tool which manages the AtlasStackingAction
   ///
-  class AtlasStackingActionTool : public IStackingActionTool,
-                                  public ActionToolBase<AtlasStackingAction>
+  class AtlasStackingActionTool : public ActionToolBase<AtlasStackingAction>,
+                                  public IStackingActionTool
+    //: public extends1< ActionToolBase<AtlasStackingAction>, IStackingActionTool >
   {
 
     public:
@@ -26,9 +27,15 @@ namespace g4hive
       AtlasStackingActionTool(const std::string& type, const std::string& name,
                               const IInterface* parent);
 
+      /// Initialize the tool (just for debugging printout)
+      virtual StatusCode initialize() override;
+
       /// Retrieve the stepping action
       virtual IStackingAction* getStackingAction() override final
       { return static_cast<IStackingAction*>( getAction() ); }
+
+      /// Query interface for gaudi
+      virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
 
     protected:
 
