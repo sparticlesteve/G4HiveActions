@@ -7,6 +7,7 @@ use Geant4              Geant4-*                External
 
 private
 use CxxUtils            CxxUtils-*              Control
+use MCTruth             MCTruth-*               Simulation/G4Sim
 end_private
 
 library G4HiveActions *.cxx components/*.cxx
