@@ -9,7 +9,13 @@ namespace g4hive
   //---------------------------------------------------------------------------
   UserActionSvc::UserActionSvc(const std::string& name,
                                ISvcLocator* pSvcLocator)
-    : AthService(name, pSvcLocator)
+    : AthService(name, pSvcLocator),
+      m_stackingActionTools(this),
+      m_steppingActionTools(this),
+      m_preTrackingActionTools(this),
+      m_postTrackingActionTools(this),
+      m_beginEventActionTools(this),
+      m_endEventActionTools(this)
   {
     declareProperty("StackingActionTools", m_stackingActionTools);
     declareProperty("SteppingActionTools", m_steppingActionTools);
