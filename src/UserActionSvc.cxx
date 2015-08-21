@@ -1,4 +1,10 @@
+// Framework includes
 #include "CxxUtils/make_unique.h"
+
+// Geant4 includes
+#include "G4RunManager.hh"
+
+// Local includes
 #include "UserActionSvc.h"
 
 namespace g4hive
@@ -50,18 +56,21 @@ namespace g4hive
   {
     // Should I lock this?
 
+    ATH_MSG_DEBUG("initializeActions");
+
     // Initialize the ATLAS stacking action.
     if(m_stackingActions.get()) {
       ATH_MSG_ERROR("Stacking action already exists for current thread!");
       return StatusCode::FAILURE;
     }
     auto stackAction = CxxUtils::make_unique<G4AtlasStackingAction>();
-
     // Assign stacking plugins
     for(auto stackTool : m_stackingActionTools){
-      IStackingAction* stackPlugin = stackTool->getStackingAction();
-      stackAction->addAction(stackPlugin);
+      auto stackPlugin = stackTool->getStackingAction();
+      ATH_MSG_INFO("stackPlugin " << stackPlugin);
+      stackAction->addAction( stackPlugin );
     }
+    G4RunManager::GetRunManager()->SetUserAction( stackAction.get() );
     m_stackingActions.set( std::move(stackAction) );
 
     // Initialize the ATLAS stepping action.
@@ -70,12 +79,10 @@ namespace g4hive
       return StatusCode::FAILURE;
     }
     auto stepAction = CxxUtils::make_unique<G4AtlasSteppingAction>();
-
     // Assign stepping plugins
-    for(auto stepTool : m_steppingActionTools){
-      ISteppingAction* stepPlugin = stepTool->getSteppingAction();
-      stepAction->addAction(stepPlugin);
-    }
+    for(auto stepTool : m_steppingActionTools)
+      stepAction->addAction( stepTool->getSteppingAction() );
+    G4RunManager::GetRunManager()->SetUserAction( stepAction.get() );
     m_steppingActions.set( std::move(stepAction) );
 
     // Initialize the ATLAS tracking action.
@@ -84,17 +91,13 @@ namespace g4hive
       return StatusCode::FAILURE;
     }
     auto trackAction = CxxUtils::make_unique<G4AtlasTrackingAction>();
-
     // Assign pre-tracking plugins
-    for(auto preTrackTool : m_preTrackingActionTools){
-      IPreTrackingAction* preTrackPlugin = preTrackTool->getPreTrackingAction();
-      trackAction->addPreTrackAction(preTrackPlugin);
-    }
+    for(auto preTrackTool : m_preTrackingActionTools)
+      trackAction->addPreTrackAction( preTrackTool->getPreTrackingAction() );
     // Assign post-tracking plugins
-    for(auto postTrackTool : m_postTrackingActionTools){
-      IPostTrackingAction* postTrackPlugin = postTrackTool->getPostTrackingAction();
-      trackAction->addPostTrackAction(postTrackPlugin);
-    }
+    for(auto postTrackTool : m_postTrackingActionTools)
+      trackAction->addPostTrackAction( postTrackTool->getPostTrackingAction() );
+    G4RunManager::GetRunManager()->SetUserAction( trackAction.get() );
     m_trackingActions.set( std::move(trackAction) );
 
     // Initialize the ATLAS event action.
@@ -103,17 +106,13 @@ namespace g4hive
       return StatusCode::FAILURE;
     }
     auto eventAction = CxxUtils::make_unique<G4AtlasEventAction>();
-
     // Assign begin-event plugins
-    for(auto beginEventTool : m_beginEventActionTools){
-      IBeginEventAction* beginEventPlugin = beginEventTool->getBeginEventAction();
-      eventAction->addBeginEventAction(beginEventPlugin);
-    }
+    for(auto beginEventTool : m_beginEventActionTools)
+      eventAction->addBeginEventAction( beginEventTool->getBeginEventAction() );
     // Assign end-event plugins
-    for(auto endEventTool : m_endEventActionTools){
-      IEndEventAction* endEventPlugin = endEventTool->getEndEventAction();
-      eventAction->addEndEventAction(endEventPlugin);
-    }
+    for(auto endEventTool : m_endEventActionTools)
+      eventAction->addEndEventAction( endEventTool->getEndEventAction() );
+    G4RunManager::GetRunManager()->SetUserAction( eventAction.get() );
     m_eventActions.set( std::move(eventAction) );
 
     return StatusCode::SUCCESS;
