@@ -18,7 +18,6 @@ namespace g4hive
   ///
   class AtlasStackingActionTool : public ActionToolBase<AtlasStackingAction>,
                                   public IStackingActionTool
-    //: public extends1< ActionToolBase<AtlasStackingAction>, IStackingActionTool >
   {
 
     public:

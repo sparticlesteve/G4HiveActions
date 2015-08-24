@@ -16,19 +16,23 @@ namespace g4hive
   UserActionSvc::UserActionSvc(const std::string& name,
                                ISvcLocator* pSvcLocator)
     : AthService(name, pSvcLocator),
+      m_beginRunActionTools(this),
+      m_endRunActionTools(this),
+      m_beginEventActionTools(this),
+      m_endEventActionTools(this),
       m_stackingActionTools(this),
-      m_steppingActionTools(this),
       m_preTrackingActionTools(this),
       m_postTrackingActionTools(this),
-      m_beginEventActionTools(this),
-      m_endEventActionTools(this)
+      m_steppingActionTools(this)
   {
-    declareProperty("StackingActionTools", m_stackingActionTools);
-    declareProperty("SteppingActionTools", m_steppingActionTools);
-    declareProperty("PreTrackingActionTools", m_preTrackingActionTools);
-    declareProperty("PostTrackingActionTools", m_postTrackingActionTools);
+    declareProperty("BeginRunActionTools", m_beginRunActionTools);
+    declareProperty("EndRunActionTools", m_endRunActionTools);
     declareProperty("BeginEventActionTools", m_beginEventActionTools);
     declareProperty("EndEventActionTools", m_endEventActionTools);
+    declareProperty("StackingActionTools", m_stackingActionTools);
+    declareProperty("PreTrackingActionTools", m_preTrackingActionTools);
+    declareProperty("PostTrackingActionTools", m_postTrackingActionTools);
+    declareProperty("SteppingActionTools", m_steppingActionTools);
   }
 
   //---------------------------------------------------------------------------
@@ -37,12 +41,14 @@ namespace g4hive
   StatusCode UserActionSvc::initialize()
   {
     ATH_MSG_INFO("initialize");
-    ATH_CHECK( m_stackingActionTools.retrieve() );
-    ATH_CHECK( m_steppingActionTools.retrieve() );
-    ATH_CHECK( m_preTrackingActionTools.retrieve() );
-    ATH_CHECK( m_postTrackingActionTools.retrieve() );
+    ATH_CHECK( m_beginRunActionTools.retrieve() );
+    ATH_CHECK( m_endRunActionTools.retrieve() );
     ATH_CHECK( m_beginEventActionTools.retrieve() );
     ATH_CHECK( m_endEventActionTools.retrieve() );
+    ATH_CHECK( m_stackingActionTools.retrieve() );
+    ATH_CHECK( m_preTrackingActionTools.retrieve() );
+    ATH_CHECK( m_postTrackingActionTools.retrieve() );
+    ATH_CHECK( m_steppingActionTools.retrieve() );
     return StatusCode::SUCCESS;
   }
 
@@ -57,6 +63,36 @@ namespace g4hive
     // Should I lock this?
 
     ATH_MSG_DEBUG("initializeActions");
+
+    // Initialize the ATLAS run action.
+    if(m_runActions.get()) {
+      ATH_MSG_ERROR("Run action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    auto runAction = CxxUtils::make_unique<G4AtlasRunAction>();
+    // Assign begin-run plugins
+    for(auto beginRunTool : m_beginRunActionTools)
+      runAction->addBeginRunAction( beginRunTool->getBeginRunAction() );
+    // Assign end-run plugins
+    for(auto endRunTool : m_endRunActionTools)
+      runAction->addEndRunAction( endRunTool->getEndRunAction() );
+    G4RunManager::GetRunManager()->SetUserAction( runAction.get() );
+    m_runActions.set( std::move(runAction) );
+
+    // Initialize the ATLAS event action.
+    if(m_eventActions.get()) {
+      ATH_MSG_ERROR("Event action already exists for current thread!");
+      return StatusCode::FAILURE;
+    }
+    auto eventAction = CxxUtils::make_unique<G4AtlasEventAction>();
+    // Assign begin-event plugins
+    for(auto beginEventTool : m_beginEventActionTools)
+      eventAction->addBeginEventAction( beginEventTool->getBeginEventAction() );
+    // Assign end-event plugins
+    for(auto endEventTool : m_endEventActionTools)
+      eventAction->addEndEventAction( endEventTool->getEndEventAction() );
+    G4RunManager::GetRunManager()->SetUserAction( eventAction.get() );
+    m_eventActions.set( std::move(eventAction) );
 
     // Initialize the ATLAS stacking action.
     if(m_stackingActions.get()) {
@@ -73,18 +109,6 @@ namespace g4hive
     G4RunManager::GetRunManager()->SetUserAction( stackAction.get() );
     m_stackingActions.set( std::move(stackAction) );
 
-    // Initialize the ATLAS stepping action.
-    if(m_steppingActions.get()) {
-      ATH_MSG_ERROR("Stepping action already exists for current thread!");
-      return StatusCode::FAILURE;
-    }
-    auto stepAction = CxxUtils::make_unique<G4AtlasSteppingAction>();
-    // Assign stepping plugins
-    for(auto stepTool : m_steppingActionTools)
-      stepAction->addAction( stepTool->getSteppingAction() );
-    G4RunManager::GetRunManager()->SetUserAction( stepAction.get() );
-    m_steppingActions.set( std::move(stepAction) );
-
     // Initialize the ATLAS tracking action.
     if(m_trackingActions.get()) {
       ATH_MSG_ERROR("Tracking action already exists for current thread!");
@@ -100,20 +124,17 @@ namespace g4hive
     G4RunManager::GetRunManager()->SetUserAction( trackAction.get() );
     m_trackingActions.set( std::move(trackAction) );
 
-    // Initialize the ATLAS event action.
-    if(m_eventActions.get()) {
-      ATH_MSG_ERROR("Event action already exists for current thread!");
+    // Initialize the ATLAS stepping action.
+    if(m_steppingActions.get()) {
+      ATH_MSG_ERROR("Stepping action already exists for current thread!");
       return StatusCode::FAILURE;
     }
-    auto eventAction = CxxUtils::make_unique<G4AtlasEventAction>();
-    // Assign begin-event plugins
-    for(auto beginEventTool : m_beginEventActionTools)
-      eventAction->addBeginEventAction( beginEventTool->getBeginEventAction() );
-    // Assign end-event plugins
-    for(auto endEventTool : m_endEventActionTools)
-      eventAction->addEndEventAction( endEventTool->getEndEventAction() );
-    G4RunManager::GetRunManager()->SetUserAction( eventAction.get() );
-    m_eventActions.set( std::move(eventAction) );
+    auto stepAction = CxxUtils::make_unique<G4AtlasSteppingAction>();
+    // Assign stepping plugins
+    for(auto stepTool : m_steppingActionTools)
+      stepAction->addAction( stepTool->getSteppingAction() );
+    G4RunManager::GetRunManager()->SetUserAction( stepAction.get() );
+    m_steppingActions.set( std::move(stepAction) );
 
     return StatusCode::SUCCESS;
   }
