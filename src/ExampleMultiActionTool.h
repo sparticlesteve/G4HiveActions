@@ -43,6 +43,10 @@ namespace g4hive
       IEndEventAction* getEndEventAction() override final
       { return static_cast<IEndEventAction*>( getAction() ); }
 
+      /// @brief finalize the tool
+      /// Demonstrates how to loop over and merge results from all actions.
+      StatusCode finalize() override final;
+
     private:
 
       /// Create an action on demand for this thread.

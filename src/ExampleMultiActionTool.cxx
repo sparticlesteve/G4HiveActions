@@ -26,4 +26,14 @@ namespace g4hive
     return std::move(action);
   }
 
+  //---------------------------------------------------------------------------
+  // Merge results from all threads
+  //---------------------------------------------------------------------------
+  StatusCode ExampleMultiActionTool::finalize()
+  {
+    for(auto tidAction : m_actions)
+      ATH_MSG_INFO("Merging action " << tidAction.second);
+    return StatusCode::SUCCESS;
+  }
+
 } // namespace g4hive
