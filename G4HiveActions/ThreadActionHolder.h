@@ -28,6 +28,16 @@ namespace g4hive
 
     public:
 
+      using ThreadMapKey_t = std::thread::id;
+      using ThreadMapVal_t = ActionType*;
+      //using ThreadMapVal_t = std::unique_ptr<ActionType>; // not supported
+      using ThreadMapHash_t = std::hash<ThreadMapKey_t>;
+
+      using ThreadMap_t = tbb::concurrent_unordered_map
+                          < ThreadMapKey_t, ThreadMapVal_t, ThreadMapHash_t >;
+
+      using const_iterator = typename ThreadMap_t::const_iterator;
+
       /// @brief Destructor will clean up the thread-local storage.
       /// Would prefer to do this automatically with unique_ptr.
       ~ThreadActionHolder() {
@@ -51,15 +61,18 @@ namespace g4hive
         m_threadMap.insert( std::make_pair(tid, action.release()) );
       }
 
+      /// Constant-access iteration over the action map
+      const_iterator begin() const {
+        return m_threadMap.begin();
+      }
+
+      /// Constant-access iteration over the action map
+      const_iterator end() const {
+        return m_threadMap.end();
+      }
+
     private:
 
-      typedef std::thread::id ThreadMapKey_t;
-      typedef ActionType* ThreadMapVal_t;
-      //typedef std::unique_ptr<ActionType> ThreadMapVal_t; // not supported
-      typedef std::hash<ThreadMapKey_t> ThreadMapHash_t;
-      typedef tbb::concurrent_unordered_map 
-      < ThreadMapKey_t, ThreadMapVal_t, ThreadMapHash_t > ThreadMap_t;
-      
       /// The wrapped thread-local storage container
       ThreadMap_t m_threadMap;
 
