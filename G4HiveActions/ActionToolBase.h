@@ -58,6 +58,12 @@ namespace g4hive
       /// This method must be implemented by the concrete action tool.
       virtual std::unique_ptr<ActionType> makeAction() = 0;
 
+      /// @brief Retrieve const-ref to the action holder
+      const ThreadActionHolder<ActionType>& actions()
+      { return m_actions; }
+
+    private:
+
       /// Thread-local storage of my user actions.
       ThreadActionHolder<ActionType> m_actions;
 

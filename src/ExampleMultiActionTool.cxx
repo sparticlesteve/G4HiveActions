@@ -31,7 +31,7 @@ namespace g4hive
   //---------------------------------------------------------------------------
   StatusCode ExampleMultiActionTool::finalize()
   {
-    for(auto tidAction : m_actions)
+    for(auto tidAction : actions())
       ATH_MSG_INFO("Merging action " << tidAction.second);
     return StatusCode::SUCCESS;
   }
