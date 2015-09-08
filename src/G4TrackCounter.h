@@ -40,7 +40,7 @@ namespace g4hive
         /// Number of secondary tracks
         unsigned int nSecondaryTracks;
         /// Number of tracks with kinetic E > 50 MeV
-        unsigned int nEnergeticTracks;
+        unsigned int n50MeVTracks;
       };
 
       /// @brief Increments event counter.

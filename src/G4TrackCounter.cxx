@@ -21,7 +21,7 @@ namespace g4hive
       nTotalTracks(0),
       nPrimaryTracks(0),
       nSecondaryTracks(0),
-      nEnergeticTracks(0)
+      n50MeVTracks(0)
   {}
 
   //---------------------------------------------------------------------------
@@ -71,7 +71,7 @@ namespace g4hive
     // 50 MeV tracks
     const double minE = 50.;
     if(track->GetKineticEnergy() > minE)
-      m_counts.nEnergeticTracks++;
+      m_counts.n50MeVTracks++;
   }
 
 } // namespace g4hive

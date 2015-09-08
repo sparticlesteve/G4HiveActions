@@ -36,14 +36,14 @@ namespace g4hive
       totalCounts.nEvents += counts.nEvents;
       totalCounts.nPrimaryTracks += counts.nPrimaryTracks;
       totalCounts.nSecondaryTracks += counts.nSecondaryTracks;
-      totalCounts.nEnergeticTracks += counts.nEnergeticTracks;
+      totalCounts.n50MeVTracks += counts.n50MeVTracks;
     }
 
     // Report the totals
     ATH_MSG_INFO("nEvents          " << totalCounts.nEvents);
     ATH_MSG_INFO("nPrimaryTracks   " << totalCounts.nPrimaryTracks);
     ATH_MSG_INFO("nSecondaryTracks " << totalCounts.nSecondaryTracks);
-    ATH_MSG_INFO("nEnergeticTracks " << totalCounts.nEnergeticTracks);
+    ATH_MSG_INFO("n50MeVTracks     " << totalCounts.n50MeVTracks);
 
     return StatusCode::SUCCESS;
   }
