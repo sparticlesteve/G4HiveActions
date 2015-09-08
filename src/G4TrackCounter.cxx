@@ -56,7 +56,7 @@ namespace g4hive
   //---------------------------------------------------------------------------
   void G4TrackCounter::preTracking(const G4Track* track)
   {
-    G4cout << "G4TrackCounter@" << this << "::preTracking" << G4endl;
+    //G4cout << "G4TrackCounter@" << this << "::preTracking" << G4endl;
     m_counts.nTotalTracks++;
     TrackHelper helper(track);
 

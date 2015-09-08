@@ -56,6 +56,10 @@ namespace g4hive
       /// Increments the track counters
       virtual void preTracking(const G4Track* track) override;
 
+      /// Retrieve my counts
+      const TrackCounts& getCounts() const
+      { return m_counts; }
+
     private:
 
       /// Track counts for this thread.

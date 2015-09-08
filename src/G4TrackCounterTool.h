@@ -36,6 +36,9 @@ namespace g4hive
       /// Initialize tool - temporarily just for debugging
       virtual StatusCode initialize() override;
 
+      /// Finalize and merge results from all threads
+      virtual StatusCode finalize() override;
+
       /// Retrieve the begin-event action interface
       virtual IBeginEventAction* getBeginEventAction() override final
       { return static_cast<IBeginEventAction*>( getAction() ); }

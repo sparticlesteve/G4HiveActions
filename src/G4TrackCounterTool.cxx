@@ -23,6 +23,32 @@ namespace g4hive
   }
 
   //---------------------------------------------------------------------------
+  // Merge results from all threads
+  //---------------------------------------------------------------------------
+  StatusCode G4TrackCounterTool::finalize()
+  {
+    ATH_MSG_INFO("finalize");
+
+    // Loop over the thread-local tools and sum their counts
+    G4TrackCounter::TrackCounts totalCounts;
+    for(auto tidAction : actions()) {
+      auto& counts = tidAction.second->getCounts();
+      totalCounts.nEvents += counts.nEvents;
+      totalCounts.nPrimaryTracks += counts.nPrimaryTracks;
+      totalCounts.nSecondaryTracks += counts.nSecondaryTracks;
+      totalCounts.nEnergeticTracks += counts.nEnergeticTracks;
+    }
+
+    // Report the totals
+    ATH_MSG_INFO("nEvents          " << totalCounts.nEvents);
+    ATH_MSG_INFO("nPrimaryTracks   " << totalCounts.nPrimaryTracks);
+    ATH_MSG_INFO("nSecondaryTracks " << totalCounts.nSecondaryTracks);
+    ATH_MSG_INFO("nEnergeticTracks " << totalCounts.nEnergeticTracks);
+
+    return StatusCode::SUCCESS;
+  }
+
+  //---------------------------------------------------------------------------
   // Create the action on request
   //---------------------------------------------------------------------------
   std::unique_ptr<G4TrackCounter>
