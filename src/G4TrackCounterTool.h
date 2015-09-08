@@ -6,7 +6,6 @@
 
 // Local includes
 #include "G4HiveActions/IBeginEventActionTool.h"
-#include "G4HiveActions/IEndRunActionTool.h"
 #include "G4HiveActions/IPreTrackingActionTool.h"
 #include "G4HiveActions/ActionToolBase.h"
 #include "G4TrackCounter.h"
@@ -21,9 +20,9 @@ namespace g4hive
   /// counts from all threads in finalization.
   ///
   /// @author Steve Farrell <Steven.Farrell@cern.ch>
+  ///
   class G4TrackCounterTool : public ActionToolBase<G4TrackCounter>,
                              public IBeginEventActionTool,
-                             public IEndRunActionTool,
                              public IPreTrackingActionTool
   {
 
@@ -43,11 +42,7 @@ namespace g4hive
       virtual IBeginEventAction* getBeginEventAction() override final
       { return static_cast<IBeginEventAction*>( getAction() ); }
 
-      /// Retrieve the begin-event action interface
-      virtual IEndRunAction* getEndRunAction() override final
-      { return static_cast<IEndRunAction*>( getAction() ); }
-
-      /// Retrieve the begin-event action interface
+      /// Retrieve the pre-tracking action interface
       virtual IPreTrackingAction* getPreTrackingAction() override final
       { return static_cast<IPreTrackingAction*>( getAction() ); }
 

@@ -29,26 +29,8 @@ namespace g4hive
   //---------------------------------------------------------------------------
   void G4TrackCounter::beginOfEvent(const G4Event* /*event*/)
   {
-    G4cout << "G4TrackCounter@" << this << "::beginOfEvent" << G4endl;
+    //G4cout << "G4TrackCounter@" << this << "::beginOfEvent" << G4endl;
     m_counts.nEvents++;
-  }
-
-  //---------------------------------------------------------------------------
-  // Summarize track counters
-  //---------------------------------------------------------------------------
-  void G4TrackCounter::endOfRun(const G4Run* run)
-  {
-    G4cout << "G4TrackCounter@" << this << "::endOfRun" << G4endl;
-    G4cout << "G4TrackCounter@" << this << "  nTotalTracks     "
-           << m_counts.nTotalTracks << G4endl;
-    G4cout << "G4TrackCounter@" << this << "  nPrimaryTracks   "
-           << m_counts.nPrimaryTracks << G4endl;
-    G4cout << "G4TrackCounter@" << this << "  nSecondaryTracks "
-           << m_counts.nSecondaryTracks << G4endl;
-    G4cout << "G4TrackCounter@" << this << "  nEnergeticTracks "
-           << m_counts.nEnergeticTracks << G4endl;
-    G4cout << "G4TrackCounter@" << this << "  nEvents          "
-           << run->GetNumberOfEvent() << G4endl;
   }
 
   //---------------------------------------------------------------------------

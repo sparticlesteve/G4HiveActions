@@ -70,11 +70,6 @@ namespace g4hive
       addRef();
       return StatusCode::SUCCESS;
     }
-    if(riid == IEndRunActionTool::interfaceID()) {
-      *ppvIf = (IEndRunActionTool*) this;
-      addRef();
-      return StatusCode::SUCCESS;
-    }
     if(riid == IPreTrackingActionTool::interfaceID()) {
       *ppvIf = (IPreTrackingActionTool*) this;
       addRef();

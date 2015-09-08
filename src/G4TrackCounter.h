@@ -20,7 +20,6 @@ namespace g4hive
   /// method of the corresponding tool.
   ///
   class G4TrackCounter : public IBeginEventAction,
-                         public IEndRunAction,
                          public IPreTrackingAction
   {
 
@@ -47,11 +46,6 @@ namespace g4hive
       /// I feel like there must be a better way to get this info.
       /// Hmm, the G4Run has a numberOfEvent field...
       virtual void beginOfEvent(const G4Event* event) override;
-
-      /// @brief Summarizes the track counters in stdout.
-      /// This will probably need to be moved into the tool in order to merge
-      /// results across all threads.
-      virtual void endOfRun(const G4Run* run) override;
 
       /// Increments the track counters
       virtual void preTracking(const G4Track* track) override;
